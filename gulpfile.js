@@ -16,6 +16,7 @@ var fs = require('fs'),
 /* Available tasks */
 gulp.task('clean', _clean)
 gulp.task('symlink', _symlink)
+gulp.task('copy', _copy) // Needed for npm packaging which cannot handle symlinks
 gulp.task('less', _less)
 gulp.task('lessComponent', _lessComponent)
 gulp.task('tsComponent', _tsComponent)
@@ -24,7 +25,7 @@ gulp.task('fullComponent', _fullComponent)
 gulp.task('test', _test)
 
 gulp.task('component', gulp.series(['lessComponent', 'tsComponent', 'jadeComponent', 'fullComponent'], cleanComponent))
-gulp.task('build', gulp.series('clean', 'symlink', 'less', 'component', function(done) {
+gulp.task('build', gulp.series('clean', ['copy', 'less', 'component'], function(done) {
   done();
 }))
 gulp.task('prepublish', gulp.series('test', 'build',  function(done) {
@@ -51,6 +52,15 @@ function _symlink() {
     .pipe(gulp.symlink('dist/html'))
   return merge(stream1, stream2)
 }
+
+function _copy() {
+  var stream1 = gulp.src('src/{images,js,less,starter-kit}/**')
+    .pipe(gulp.dest('dist'));
+  var stream2 = gulp.src('src/views/template')
+    .pipe(gulp.dest('dist/html'))
+  return merge(stream1, stream2)
+}
+
 function _less() {
   return gulp.src(['src/less/*.less', 'src/less/corporate-ui/{core,fonts,icons,brands}.less'])
     .pipe(sourcemaps.init())
