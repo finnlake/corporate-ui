@@ -23,7 +23,7 @@ window.CorporateUi = (function() {
   init();
 
   return public;
-  
+
   function init() {
 
     addMetaAndHeaderSpecs();
@@ -34,7 +34,7 @@ window.CorporateUi = (function() {
 
     appendExternals();
   }
-  
+
   function done(event) {
     if (window.ready_event) {
       return;
@@ -280,39 +280,27 @@ window.CorporateUi = (function() {
     document.body.classList.add(brand);
   }
 
-  function setGlobals() {
-    var scriptUrl = document.querySelector('[src*="corporate-ui.js"]').src,
-        port = urlInfo(scriptUrl).port ? ':' + urlInfo(scriptUrl).port : '',
-        localhost = urlInfo(scriptUrl).hostname === 'localhost' || urlInfo(scriptUrl).hostname.match(/rd[0-9]+/g) !== null;
+    function setGlobals() {
+        window.static_root = 'https://static.scania.com';
+        window.version_root = '2.3.5-pre';
+        window.params = {};
 
-    window.corporate_ui_params = urlInfo(scriptUrl).search.substring(1);
-    window.static_root = (localhost ? 'http://' : 'https://') + urlInfo(scriptUrl).hostname + port;
-    window.version_root = window.static_root + '/' + urlInfo(scriptUrl).pathname.replace('js/corporate-ui.js', '');
-    window.protocol = urlInfo(scriptUrl).protocol;
-    window.environment = urlInfo(scriptUrl).pathname.split('/')[1];
-    window.params = {};
+        window.less = { isFileProtocol: true }; // Is needed for making synchronous imports in less
+        window.defaults = {
+            appName: 'Application name',
+            company: 'Scania'
+        };
+        public.components = {
+            'corporate-header': window.static_root + '/build/global/' + window.version_root + '/html/component/Navigation/corporate-header/corporate-header.html',
+            'corporate-footer': window.static_root + '/build/global/' + window.version_root + '/html/component/Navigation/corporate-footer/corporate-footer.html',
+            'main-content': window.static_root + '/build/global/' + window.version_root + '/html/component/Content + Teasers/main-content/main-content.html',
+            'main-navigation': window.static_root + '/build/global/' + window.version_root + '/html/component/Navigation/main-navigation/main-navigation.html'
+        };
 
-    var params = decodeURI(window.corporate_ui_params).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"');
-    if (params !== '') {
-      window.params = JSON.parse('{"' + params + '"}');
+        /*window.Polymer = {
+         dom: 'shadow'
+         };*/
     }
-
-    window.less = { isFileProtocol: true }; // Is needed for making synchronous imports in less
-    window.defaults = {
-      appName: 'Application name',
-      company: 'Scania'
-    };
-    public.components = {
-      'corporate-header': window.version_root + 'html/component/Navigation/corporate-header/corporate-header.html',
-      'corporate-footer': window.version_root + 'html/component/Navigation/corporate-footer/corporate-footer.html',
-      'main-content': window.version_root + 'html/component/Content + Teasers/main-content/main-content.html',
-      'main-navigation': window.version_root + 'html/component/Navigation/main-navigation/main-navigation.html'
-    };
-
-    /*window.Polymer = {
-      dom: 'shadow'
-    };*/
-  }
 
   function polymerInject() {
     /* Extending Polymer _ready method */
