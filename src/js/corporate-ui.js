@@ -320,6 +320,7 @@ window.CorporateUi = (function() {
     if (params !== '') {
       window.params = JSON.parse('{"' + params + '"}');
     }
+  }
 
   function polymerInject() {
     /* Extending Polymer _ready method */
