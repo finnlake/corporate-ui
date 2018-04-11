@@ -282,26 +282,26 @@ window.CorporateUi = (function() {
     document.body.classList.add(brand);
   }
 
-/* Our fmp changes
-    function setGlobals() {
-        window.static_root = 'https://static.scania.com';
-        window.version_root = '2.3.5-pre';
-        window.params = {};
+// Our changes for npm
+  function setGlobals() {
+      window.static_root = 'https://static.scania.com';
+      window.version_root = '2.3.5';
+      window.params = {};
 
-        window.less = { isFileProtocol: true }; // Is needed for making synchronous imports in less
-        window.defaults = {
-            appName: 'Application name',
-            company: 'Scania'
-        };
-        public.components = {
-            'corporate-header': window.static_root + '/build/global/' + window.version_root + '/html/component/Navigation/corporate-header/corporate-header.html',
-            'corporate-footer': window.static_root + '/build/global/' + window.version_root + '/html/component/Navigation/corporate-footer/corporate-footer.html',
-            'main-content': window.static_root + '/build/global/' + window.version_root + '/html/component/Content + Teasers/main-content/main-content.html',
-            'main-navigation': window.static_root + '/build/global/' + window.version_root + '/html/component/Navigation/main-navigation/main-navigation.html'
-        };
+      window.less = { isFileProtocol: true }; // Is needed for making synchronous imports in less
+      window.defaults = {
+          appName: 'Application name',
+          company: 'Scania'
+      };
+      public.components = {
+          'corporate-header': window.static_root + '/build/global/' + window.version_root + '/html/component/Navigation/corporate-header/corporate-header.html',
+          'corporate-footer': window.static_root + '/build/global/' + window.version_root + '/html/component/Navigation/corporate-footer/corporate-footer.html',
+          'main-content': window.static_root + '/build/global/' + window.version_root + '/html/component/Content + Teasers/main-content/main-content.html',
+          'main-navigation': window.static_root + '/build/global/' + window.version_root + '/html/component/Navigation/main-navigation/main-navigation.html'
+      };
+  }
 
- */
-
+/*
   function setGlobals() {
     window.corporate_elm = document.querySelector('[src*="corporate-ui.js"]');
 
@@ -321,7 +321,7 @@ window.CorporateUi = (function() {
       window.params = JSON.parse('{"' + params + '"}');
     }
   }
-
+*/
   function polymerInject() {
     /* Extending Polymer _ready method */
     /* We extend _ready and not ready because ready will be overridden when used in a component */
